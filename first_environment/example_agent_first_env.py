@@ -1,4 +1,5 @@
 import gym
+import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -7,13 +8,16 @@ from torch.distributions import Categorical
 import torch.multiprocessing as mp
 import numpy as np
 
+import first_environment 
+
+
 # Hyperparameters
 n_train_processes = 3
 learning_rate = 0.0002
 update_interval = 5
 gamma = 0.98
-max_train_steps = 60000
-PRINT_INTERVAL = update_interval * 100
+max_train_steps = 20
+PRINT_INTERVAL = update_interval /5
 
 class ActorCritic(nn.Module):
     def __init__(self):
@@ -35,7 +39,7 @@ class ActorCritic(nn.Module):
 
 def worker(worker_id, master_end, worker_end):
     master_end.close()  # Forbid worker to use the master end for messaging
-    env = gym.make('CartPole-v1')
+    env = first_environment.StatePreparation()
     env.seed(worker_id)
 
     while True:
@@ -112,7 +116,7 @@ class ParallelEnv:
             self.closed = True
 
 def test(step_idx, model):
-    env = gym.make('CartPole-v1')
+    env = first_environment.StatePreparation()
     score = 0.0
     done = False
     num_test = 10
@@ -126,9 +130,11 @@ def test(step_idx, model):
             s = s_prime
             score += r
         done = False
-    print(f"Step # :{step_idx}, avg score : {score/num_test:.1f}")
-
+    #Changed from  print(f"Step # :{step_idx}, avg score : {score/num_test:.1f}")
     env.close()
+    return(score/num_test)
+
+    
 
 def compute_target(v_final, r_lst, mask_lst):
     G = v_final.reshape(-1)
@@ -148,6 +154,13 @@ if __name__ == '__main__':
 
     step_idx = 0
     s = envs.reset()
+
+    ### changes to output best model
+    max_reward = 0
+    global_r_list = list()
+    global_r_list.append("N train ")
+    cwd = os.getcwd()
+
     while step_idx < max_train_steps:
         s_lst, a_lst, r_lst, mask_lst = list(), list(), list(), list()
         for _ in range(update_interval):
@@ -157,7 +170,7 @@ if __name__ == '__main__':
 
             s_lst.append(s)
             a_lst.append(a)
-            r_lst.append(r/100.0)
+            r_lst.append(r)
             mask_lst.append(1 - done)
 
             s = s_prime
@@ -181,7 +194,21 @@ if __name__ == '__main__':
         loss.backward()
         optimizer.step()
 
+
+
+        # changes
         if step_idx % PRINT_INTERVAL == 0:
-            test(step_idx, model)
+            current_reward = test(step_idx, model)
+            global_r_list.append(current_reward)
+            print(f"Step # :{step_idx}, avg score :", current_reward)
+
+            if current_reward > max_reward:
+                max_reward = current_reward
+                #torch.save(pi, "example_agent/training_results/training_results.pth")
+
+        print(s_final)
 
     envs.close()
+    print("done, max reward was:",max_reward)
+    np.savetxt("example_agent/training_results/reward_list", np.array(global_r_list))
+    
