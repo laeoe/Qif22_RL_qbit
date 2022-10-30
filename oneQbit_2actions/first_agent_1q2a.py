@@ -154,9 +154,9 @@ def test(step_idx, model):
             list_s_.append(s)
             list_a_.append(a)
         done = False
-        list_s.append(list_s_)
-        list_a.append(list_a_)
-        list_r.append(r)
+        list_s.append([list_s_])
+        list_a.append([list_a_])
+        list_r.append([r])
     data_list.append([step_idx, list_a, list_s, list_r, score])
     env.close()
 
