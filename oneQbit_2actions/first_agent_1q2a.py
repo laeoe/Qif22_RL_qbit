@@ -7,9 +7,23 @@ import torch.optim as optim
 from torch.distributions import Categorical
 import torch.multiprocessing as mp
 import numpy as np
+import pickle
+import oneQ_2act_environment
 
-import second_env
-env_ = second_env.GridWorldEnv()
+import custom_functions
+import hyperparams
+
+env_ = oneQ_2act_environment.GridWorldEnv()
+states_ = list()
+#folder_name = "/oneQbit_2actions/"
+folder_name = hyperparams.folder_name
+results_dir = hyperparams.results_dir
+
+#cwd = os.getcwd()
+#results_dir = cwd + folder_name + "training_results/"
+
+
+data_list = list()
 
 # Hyperparameters
 n_train_processes = 3
@@ -18,6 +32,7 @@ update_interval = 5
 gamma = 0.98
 max_train_steps = 20000
 PRINT_INTERVAL = update_interval * 100
+
 
 class ActorCritic(nn.Module):
     def __init__(self):
@@ -120,18 +135,36 @@ def test(step_idx, model):
     score = 0.0
     done = False
     num_test = 10
+    list_s_ = list()
+    list_s = list()
+    list_g = list()
+
+    list_a_ = list()
+    list_a = list()
+    list_r = list()
 
     for _ in range(num_test):
         s = env.reset()
         while not done:
+            #s_ini = env.vecTrans()
+            #list_s_.append(s_ini)
             prob = model.pi(torch.from_numpy(s).float(), softmax_dim=0)
             a = Categorical(prob).sample().numpy()
             s_prime, r, done, info = env.step(a)
             s = s_prime
             score += r
+            list_s_.append(s)
+            list_a_.append(a)
         done = False
-    #Changed from  print(f"Step # :{step_idx}, avg score : {score/num_test:.1f}")
+        
+        list_g.append([list_a_, list_s_, r])
+        list_a_ = list()
+        list_s_ = list()
+    data_list.append([step_idx, list_g])
     env.close()
+
+    #states_.append(np.mean(s_, axis = 0)) #computes the mean of final state after running the model 10 times until it finalized
+
     return(score/num_test)
 
     
@@ -160,8 +193,7 @@ if __name__ == '__main__':
     global_r_list = list()
     #global_r_list.append("N train ")
 
-    cwd = os.getcwd()
-    results_dir = cwd + "/second_env/training_results"
+
 
     while step_idx < max_train_steps:
         s_lst, a_lst, r_lst, mask_lst = list(), list(), list(), list()
@@ -206,12 +238,14 @@ if __name__ == '__main__':
 
             if current_reward > max_reward:
                 max_reward = current_reward
-                torch.save(pi, results_dir + "/trained_Agent.pth")
+                torch.save(pi, results_dir + "trained_Agent.pth")
 
 
     envs.close()
-    print("last state vector", s_vec)
-    print("cwd", cwd)
+    #print("last state vector", s_vec)
     print("done, max reward was:",max_reward)
-    np.save(results_dir + "/r_list", np.array(global_r_list))
+    #np.save(results_dir + "r_list", np.array(global_r_list))
+    #np.save(results_dir + "states_list", np.array(states_))
     
+    
+    custom_functions.data_save(data_list, results_dir + "data_list")
