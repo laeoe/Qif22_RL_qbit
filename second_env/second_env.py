@@ -50,3 +50,6 @@ class GridWorldEnv(gym.Env):
         return observation, reward, terminated, info
                                  
 
+
+if __name__ == '__main__':
+    print('env ran')
