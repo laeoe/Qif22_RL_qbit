@@ -206,7 +206,7 @@ if __name__ == '__main__':
                 max_reward = current_reward
                 #torch.save(pi, "example_agent/training_results/training_results.pth")
 
-        print(s_final)
+        #print(s_final)
 
     envs.close()
     print("done, max reward was:",max_reward)
