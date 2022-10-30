@@ -123,6 +123,7 @@ def test(step_idx, model):
     score = 0.0
     done = False
     num_test = 10
+    s_ = list()
 
     for _ in range(num_test):
         s = env.reset()
@@ -133,9 +134,11 @@ def test(step_idx, model):
             s = s_prime
             score += r
         done = False
-        states_.append(s, step_idx)
+        s_.append(np.array(s))
     #Changed from  print(f"Step # :{step_idx}, avg score : {score/num_test:.1f}")
     env.close()
+    states_.append(np.mean(s_, axis = 0)) #computes the mean of final state after running the model 10 times until it finalized
+
     return(score/num_test)
 
     
@@ -217,4 +220,6 @@ if __name__ == '__main__':
     #print("last state vector", s_vec)
     print("done, max reward was:",max_reward)
     np.save(results_dir + "r_list", np.array(global_r_list))
+    np.save(results_dir + "states_list", np.array(states_))
+    
     
