@@ -8,7 +8,7 @@ import qutip
 
 class StatePreparation(gym.Env):
 
-  def __init__(self, steps=20, deltat=0.1, h=[-4,4], threshold=0.8):
+  def __init__(self, steps=20, deltat=0.1, h=[-4,4], threshold=0.99):
     self.steps = steps
     self.deltat = deltat
     self.field = h
@@ -46,9 +46,9 @@ class StatePreparation(gym.Env):
 
   def step(self, action):
     self.state = np.matmul(self.hamiltonians[action],self.state)
-    self.fidelity = np.matmul(self.state,self.target)
+    fidelity = np.abs(np.matmul(self.state,self.target))
 
-    if self.fidelity > self.threshold:
+    if fidelity > self.threshold:
       reward = fidelity
       terminated = True
     else:
@@ -76,9 +76,9 @@ class StatePreparation(gym.Env):
     plt.show()
 
 
-    
-prepare = StatePreparation()
 
-prepare.reset()
-prepare.step(0)
-prepare.blochsphere()
+# prepare = StatePreparation()
+
+# prepare.reset()
+# prepare.step(0)
+# prepare.blochsphere()

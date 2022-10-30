@@ -8,12 +8,15 @@ from torch.distributions import Categorical
 import torch.multiprocessing as mp
 import numpy as np
 
+import first_environment 
+
+
 # Hyperparameters
 n_train_processes = 3
 learning_rate = 0.0002
 update_interval = 5
 gamma = 0.98
-max_train_steps = 6000
+max_train_steps = 60000
 PRINT_INTERVAL = update_interval * 100
 
 class ActorCritic(nn.Module):
@@ -36,7 +39,7 @@ class ActorCritic(nn.Module):
 
 def worker(worker_id, master_end, worker_end):
     master_end.close()  # Forbid worker to use the master end for messaging
-    env = gym.make('CartPole-v1')
+    env = first_environment.StatePreparation()
     env.seed(worker_id)
 
     while True:
@@ -113,7 +116,7 @@ class ParallelEnv:
             self.closed = True
 
 def test(step_idx, model):
-    env = gym.make('CartPole-v1')
+    env = first_environment.StatePreparation()
     score = 0.0
     done = False
     num_test = 10
@@ -128,9 +131,10 @@ def test(step_idx, model):
             score += r
         done = False
     #Changed from  print(f"Step # :{step_idx}, avg score : {score/num_test:.1f}")
+    env.close()
     return(score/num_test)
 
-    env.close()
+    
 
 def compute_target(v_final, r_lst, mask_lst):
     G = v_final.reshape(-1)
@@ -166,7 +170,7 @@ if __name__ == '__main__':
 
             s_lst.append(s)
             a_lst.append(a)
-            r_lst.append(r/100.0)
+            r_lst.append(r)
             mask_lst.append(1 - done)
 
             s = s_prime
@@ -196,16 +200,16 @@ if __name__ == '__main__':
         if step_idx % PRINT_INTERVAL == 0:
             current_reward = test(step_idx, model)
             global_r_list.append(current_reward)
-            print(f"Step # :{step_idx}, avg score : {current_reward:.1f}")
+            print(f"Step # :{step_idx}, avg score :", current_reward)
 
 
             if current_reward > max_reward:
                 max_reward = current_reward
-                torch.save(pi, "example_agent/training_results/training_results.pth")
+                #torch.save(pi, "example_agent/training_results/training_results.pth")
 
                 
 
     envs.close()
     print("done, max reward was:",max_reward)
-    np.savetxt("example_agent/training_results/reward_list", np.array(global_r_list))
+    #np.savetxt("example_agent/training_results/reward_list", np.array(global_r_list))
     
