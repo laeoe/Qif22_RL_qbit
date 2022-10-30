@@ -8,9 +8,11 @@ from torch.distributions import Categorical
 import torch.multiprocessing as mp
 import numpy as np
 
-import second_env
-env_ = second_env.GridWorldEnv()
+import oneQ_2act_environment
+
+env_ = oneQ_2act_environment.GridWorldEnv()
 states_ = list()
+folder_name = "/oneQbit_2actions/"
 
 # Hyperparameters
 n_train_processes = 3
@@ -163,7 +165,7 @@ if __name__ == '__main__':
     #global_r_list.append("N train ")
 
     cwd = os.getcwd()
-    results_dir = cwd + "/second_env/training_results"
+    results_dir = cwd + folder_name + "training_results/"
 
     while step_idx < max_train_steps:
         s_lst, a_lst, r_lst, mask_lst = list(), list(), list(), list()
@@ -208,11 +210,11 @@ if __name__ == '__main__':
 
             if current_reward > max_reward:
                 max_reward = current_reward
-                torch.save(pi, results_dir + "/trained_Agent.pth")
+                torch.save(pi, results_dir + "trained_Agent.pth")
 
 
     envs.close()
     #print("last state vector", s_vec)
     print("done, max reward was:",max_reward)
-    np.save(results_dir + "/r_list", np.array(global_r_list))
+    np.save(results_dir + "r_list", np.array(global_r_list))
     
