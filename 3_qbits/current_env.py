@@ -4,6 +4,7 @@ import numpy as np
 from numpy import linalg
 import scipy as sc
 from scipy import linalg
+from torch import initial_seed
 import hyperparams as hp
 
 class GridWorldEnv(gym.Env): 
@@ -14,7 +15,7 @@ class GridWorldEnv(gym.Env):
         self.stepSize = stepSize
         self.stepNum = 0
         #initial state is equal superposition
-        self.initialState = 1.0/np.sqrt(8)*np.array([1,1,1,1,1,1,1,1])
+        self.initialState = np.array([1,1,1,1,1,1,1,1])/np.sqrt(8)
         #target state is GHZ state
         self.targetState = 1.0/np.sqrt(2)*np.array([1,0,0,0,0,0,0,1])
         self.state = self.initialState
