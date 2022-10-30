@@ -32,7 +32,7 @@ class GridWorldEnv(gym.Env):
     def reset(self, options=None):
         self.state = self.initialState
         observation = self.vecTrans(self.state)
-        self.stepNum = 0
+        self.stepNum = 0 #comment
         return observation
     
     def step(self, action): #action 0 or 1
