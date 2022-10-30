@@ -24,7 +24,7 @@ class GridWorldEnv(gym.Env):
         self.state = self.initialState
 
         self.h = [-4,4]
-        self.N_field = 10
+        self.N_field = 50
         self.field = np.ndarray(self.N_field + 1)
         for i in range(self.N_field + 1):
             self.field[i] = self.h[0] + i* (self.h[1] - self.h[0]) / self.N_field

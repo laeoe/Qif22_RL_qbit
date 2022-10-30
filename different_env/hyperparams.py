@@ -11,7 +11,7 @@ import os
 
 folder_name = "/different_env/"
 cwd = os.getcwd()
-results_dir = cwd + folder_name + "training_results/"
+results_dir = cwd + folder_name + "training_results/run1/"
 
 #Agent Hyperparams
 n_train_processes = 3
