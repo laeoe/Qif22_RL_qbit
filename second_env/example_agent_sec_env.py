@@ -16,7 +16,7 @@ n_train_processes = 3
 learning_rate = 0.0002
 update_interval = 5
 gamma = 0.98
-max_train_steps = 60000
+max_train_steps = 20000
 PRINT_INTERVAL = update_interval * 100
 
 class ActorCritic(nn.Module):
@@ -158,8 +158,10 @@ if __name__ == '__main__':
     ### changes to output best model
     max_reward = 0
     global_r_list = list()
-    global_r_list.append("N train ")
+    #global_r_list.append("N train ")
+
     cwd = os.getcwd()
+    results_dir = cwd + "/second_env/training_results"
 
     while step_idx < max_train_steps:
         s_lst, a_lst, r_lst, mask_lst = list(), list(), list(), list()
@@ -204,11 +206,12 @@ if __name__ == '__main__':
 
             if current_reward > max_reward:
                 max_reward = current_reward
-                #torch.save(pi, "example_agent/training_results/training_results.pth")
+                torch.save(pi, results_dir + "/trained_Agent.pth")
 
-        #print(s_final)
 
     envs.close()
+    print("last state vector", s_vec)
+    print("cwd", cwd)
     print("done, max reward was:",max_reward)
-    #np.savetxt("example_agent/training_results/reward_list", np.array(global_r_list))
+    np.save(results_dir + "/r_list", np.array(global_r_list))
     
