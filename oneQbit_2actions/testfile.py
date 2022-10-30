@@ -1,15 +1,17 @@
 import numpy as np
 import os
+import custom_functions
+import hyperparams
 
-c = list()
+results_dir = hyperparams.results_dir
 
-a = [0, 1, 2, 3, 5 ,[0, 0]]
-b = [0]
 
-c.append([a, b])
+l = custom_functions.data_load(results_dir + "data_list")
 
-c = np.array(c)
-print(c)
+print("shape", np.shape(l[0][2][0]))
+print(l[0][2][0][0])
+#print(c)
+
 
 
 #print(np.mean(c, axis = 0))

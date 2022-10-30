@@ -8,12 +8,20 @@ from torch.distributions import Categorical
 import torch.multiprocessing as mp
 import numpy as np
 import pickle
-
 import oneQ_2act_environment
+
+import custom_functions
+import hyperparams
 
 env_ = oneQ_2act_environment.GridWorldEnv()
 states_ = list()
-folder_name = "/oneQbit_2actions/"
+#folder_name = "/oneQbit_2actions/"
+folder_name = hyperparams.folder_name
+results_dir = hyperparams.results_dir
+
+#cwd = os.getcwd()
+#results_dir = cwd + folder_name + "training_results/"
+
 
 data_list = list()
 
@@ -24,18 +32,6 @@ update_interval = 5
 gamma = 0.98
 max_train_steps = 20000
 PRINT_INTERVAL = update_interval * 100
-
-def data_save(lists, filename):
-    """Takes list of lists and saves it into filename"""
-    outfile = open(filename, 'wb')
-    pickle.dump(lists, outfile)
-    outfile.close()
-    
-def data_load(filename):
-    infile = open(filename, 'rb')
-    lists = pickle.load(infile)
-    infile.close()
-    return lists
 
 
 class ActorCritic(nn.Module):
@@ -194,8 +190,7 @@ if __name__ == '__main__':
     global_r_list = list()
     #global_r_list.append("N train ")
 
-    cwd = os.getcwd()
-    results_dir = cwd + folder_name + "training_results/"
+
 
     while step_idx < max_train_steps:
         s_lst, a_lst, r_lst, mask_lst = list(), list(), list(), list()
@@ -250,4 +245,4 @@ if __name__ == '__main__':
     #np.save(results_dir + "states_list", np.array(states_))
     
     
-    data_save(data_list, results_dir + "data_list")
+    custom_functions.data_save(data_list, results_dir + "data_list")
