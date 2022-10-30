@@ -36,6 +36,7 @@ PRINT_INTERVAL = hyperparams.PRINT_INTERVAL
 depth_first_layer = hyperparams.depth_firt_layer
 
 
+
 class ActorCritic(nn.Module):
     def __init__(self):
         super(ActorCritic, self).__init__()

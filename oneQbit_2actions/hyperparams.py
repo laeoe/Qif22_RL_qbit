@@ -13,4 +13,6 @@ max_train_steps = 20000
 PRINT_INTERVAL = update_interval * 100
 
 depth_firt_layer = 4
+depth_second_layer = 256
+
 
