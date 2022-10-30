@@ -148,8 +148,8 @@ def test(step_idx, model):
     for _ in range(num_test):
         s = env.reset()
         while not done:
-            s_ini = env.vecTrans(initialState)
-            list_s_.append(s_ini)
+            #s_ini = env.vecTrans()
+            #list_s_.append(s_ini)
             prob = model.pi(torch.from_numpy(s).float(), softmax_dim=0)
             a = Categorical(prob).sample().numpy()
             s_prime, r, done, info = env.step(a)
@@ -250,3 +250,4 @@ if __name__ == '__main__':
     #np.save(results_dir + "states_list", np.array(states_))
     
     
+    data_save(data_list, results_dir + "data_list")
