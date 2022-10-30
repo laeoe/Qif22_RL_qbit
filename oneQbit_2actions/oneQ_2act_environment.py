@@ -19,8 +19,8 @@ class GridWorldEnv(gym.Env):
         self.maxSteps = maxSteps
         self.stepSize = stepSize
         self.stepNum = 0
-        self.initialState = np.array([np.sqrt((5+np.sqrt(5))/10),np.sqrt(2/(5+np.sqrt(5)))])
-        self.targetState = np.array([-(1+np.sqrt(5))/(np.sqrt(2*(5+np.sqrt(5)))), np.sqrt(2.0/(5+np.sqrt(5)))])
+        self.initialState = hp.initialState
+        self.targetState = hp.targetState
         self.state = self.initialState
         self.h = [-4,4]
         self.Ham0 = sc.linalg.expm(-1j*stepSize*np.array([[-1,self.h[0]],[self.h[0],1]]))
@@ -50,7 +50,7 @@ class GridWorldEnv(gym.Env):
         self.state = np.dot(self.Hams[action],self.state)
         self.stepNum += 1
         fidelity = np.linalg.norm(np.dot(np.conj(self.state).T,self.targetState))**2
-        if self.stepNum == self.maxSteps or fidelity > 0.99:
+        if self.stepNum == self.maxSteps or fidelity > hp.targetFidelity:
             reward = fidelity
             terminated = True
         else:
