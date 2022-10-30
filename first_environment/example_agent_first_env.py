@@ -16,8 +16,8 @@ n_train_processes = 3
 learning_rate = 0.0002
 update_interval = 5
 gamma = 0.98
-max_train_steps = 60000
-PRINT_INTERVAL = update_interval * 100
+max_train_steps = 20
+PRINT_INTERVAL = update_interval /5
 
 class ActorCritic(nn.Module):
     def __init__(self):
@@ -202,14 +202,13 @@ if __name__ == '__main__':
             global_r_list.append(current_reward)
             print(f"Step # :{step_idx}, avg score :", current_reward)
 
-
             if current_reward > max_reward:
                 max_reward = current_reward
                 #torch.save(pi, "example_agent/training_results/training_results.pth")
 
-                
+        print(s_final)
 
     envs.close()
     print("done, max reward was:",max_reward)
-    #np.savetxt("example_agent/training_results/reward_list", np.array(global_r_list))
+    np.savetxt("example_agent/training_results/reward_list", np.array(global_r_list))
     

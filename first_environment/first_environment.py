@@ -8,8 +8,9 @@ import qutip
 
 class StatePreparation(gym.Env):
 
-  def __init__(self, steps=20, deltat=0.1, h=[-4,4], threshold=0.99):
+  def __init__(self, steps=20, deltat=0.1, h=[-4,4], threshold=0.99999999):
     self.steps = steps
+    self.stepcount = 0
     self.deltat = deltat
     self.field = h
     self.threshold=threshold
