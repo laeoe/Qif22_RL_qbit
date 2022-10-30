@@ -26,12 +26,14 @@ results_dir = hyperparams.results_dir
 data_list = list()
 
 # Hyperparameters
-n_train_processes = 3
-learning_rate = 0.0002
-update_interval = 5
-gamma = 0.98
-max_train_steps = 20000
-PRINT_INTERVAL = update_interval * 100
+n_train_processes = hyperparams.n_train_processes
+learning_rate = hyperparams.learning_rate
+update_interval = hyperparams.update_interval
+gamma = hyperparams.gamma
+max_train_steps = hyperparams.max_train_steps
+PRINT_INTERVAL = hyperparams.PRINT_INTERVAL
+
+depth_first_layer = hyperparams.depth_firt_layer
 
 
 class ActorCritic(nn.Module):
