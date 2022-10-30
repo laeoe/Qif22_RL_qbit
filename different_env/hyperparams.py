@@ -11,7 +11,7 @@ import os
 
 folder_name = "/different_env/"
 cwd = os.getcwd()
-results_dir = cwd + folder_name + "training_results/run1/"
+results_dir = cwd + folder_name + "training_results/"
 
 #Agent Hyperparams
 n_train_processes = 3
@@ -28,7 +28,8 @@ depth_action_space = 2
 #Environment hyperparams
 maxSteps = 20
 stepSize = 0.1
-initialState = np.array([np.sqrt((5+np.sqrt(5))/10),np.sqrt(2/(5+np.sqrt(5)))])
+#initialState = np.array([np.sqrt((5+np.sqrt(5))/10),np.sqrt(2/(5+np.sqrt(5)))])
+initialState = np.array([1, 0])
 targetState = np.array([-(1+np.sqrt(5))/(np.sqrt(2*(5+np.sqrt(5)))), np.sqrt(2.0/(5+np.sqrt(5)))])
 targetFidelity = 0.99
 
