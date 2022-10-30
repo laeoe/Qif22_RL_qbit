@@ -6,6 +6,11 @@ import scipy as sc
 from scipy import linalg
 import matplotlib.pyplot as plt
 import qutip
+import hyperparams as hp
+
+#hyperparams 
+
+
 
 class GridWorldEnv(gym.Env):
     

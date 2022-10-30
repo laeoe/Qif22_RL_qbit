@@ -1,4 +1,13 @@
+import gym
+from gym import spaces
+import numpy as np
+from numpy import linalg
+import scipy as sc
+from scipy import linalg
+import matplotlib.pyplot as plt
+import qutip
 import os
+
 
 folder_name = "/oneQbit_2actions/"
 cwd = os.getcwd()
@@ -14,5 +23,11 @@ PRINT_INTERVAL = update_interval * 100
 
 depth_firt_layer = 4
 depth_second_layer = 256
+depth_action_space = 2
+
+#Environment hyperparams
+maxSteps = 20
+stepSize = 0.1
+initialState = np.array([np.sqrt((5+np.sqrt(5))/10),np.sqrt(2/(5+np.sqrt(5)))])
 
 

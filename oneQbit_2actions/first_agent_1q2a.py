@@ -26,23 +26,25 @@ results_dir = hyperparams.results_dir
 data_list = list()
 
 # Hyperparameters
-n_train_processes = hyperparams.n_train_processes
+n_train_processes = hyperparams.n_train_processes  #number of parallel workers
 learning_rate = hyperparams.learning_rate
-update_interval = hyperparams.update_interval
+update_interval = hyperparams.update_interval     #interval after which the learning is updated, currently 5
 gamma = hyperparams.gamma
 max_train_steps = hyperparams.max_train_steps
 PRINT_INTERVAL = hyperparams.PRINT_INTERVAL
 
 depth_first_layer = hyperparams.depth_firt_layer
+depth_second_layer = hyperparams.depth_second_layer
+depth_action_space = hyperparams.depth_action_space
 
 
 
 class ActorCritic(nn.Module):
     def __init__(self):
         super(ActorCritic, self).__init__()
-        self.fc1 = nn.Linear(4, 256)
-        self.fc_pi = nn.Linear(256, 2)
-        self.fc_v = nn.Linear(256, 1)
+        self.fc1 = nn.Linear(depth_first_layer, depth_second_layer)
+        self.fc_pi = nn.Linear(depth_second_layer, depth_action_space)
+        self.fc_v = nn.Linear(depth_second_layer, 1)
 
     def pi(self, x, softmax_dim=1):
         x = F.relu(self.fc1(x))
