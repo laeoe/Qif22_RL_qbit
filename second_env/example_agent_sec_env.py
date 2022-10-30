@@ -16,8 +16,8 @@ n_train_processes = 3
 learning_rate = 0.0002
 update_interval = 5
 gamma = 0.98
-max_train_steps = 20
-PRINT_INTERVAL = update_interval /5
+max_train_steps = 60000
+PRINT_INTERVAL = update_interval * 100
 
 class ActorCritic(nn.Module):
     def __init__(self):
@@ -197,7 +197,7 @@ if __name__ == '__main__':
 
 
         # changes
-        if True:
+        if step_idx % PRINT_INTERVAL == 0:
             current_reward = test(step_idx, model)
             global_r_list.append(current_reward)
             print(f"Step # :{step_idx}, avg score :", current_reward)
