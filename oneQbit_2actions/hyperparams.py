@@ -30,6 +30,6 @@ maxSteps = 20
 stepSize = 0.1
 initialState = np.array([np.sqrt((5+np.sqrt(5))/10),np.sqrt(2/(5+np.sqrt(5)))])
 targetState = np.array([-(1+np.sqrt(5))/(np.sqrt(2*(5+np.sqrt(5)))), np.sqrt(2.0/(5+np.sqrt(5)))])
-targetFidelity = 0.99
+targetFidelity = 1
 
 
