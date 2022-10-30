@@ -3,10 +3,12 @@ import matplotlib.pyplot as plt
 import os
 
 cwd = os.getcwd()
-results_dir = cwd + "/second_env/training_results/run1/"
+folder_name = "/oneQbit_2actions/"
+results_dir = cwd + folder_name + "training_results/run1/"
 
 
 rewards = np.load(results_dir + 'r_list.npy')
+
 
 def plot_rewards(r):
     """
@@ -25,6 +27,7 @@ def plot_rewards(r):
     plt.title('Reward as a function of numer of series')
     plt.xlabel('Number of series')
     plt.ylabel('Reward')
-    #plt.legend()
+    plt.legend()
+    plt.show()
 
 plot_rewards(rewards)
