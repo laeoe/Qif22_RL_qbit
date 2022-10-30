@@ -39,7 +39,7 @@ class GridWorldEnv(gym.Env):
         self.state = np.dot(self.Hams[action],self.state)
         self.stepNum += 1
         fidelity = np.linalg.norm(np.dot(np.conj(self.state).T,self.targetState))**2
-        if self.stepNum == self.maxSteps or np.abs(fidelity) > 0.99:
+        if self.stepNum == self.maxSteps or fidelity > 0.99:
             reward = fidelity
             terminated = True
         else:
