@@ -3,15 +3,16 @@ import os
 
 c = list()
 
-a = np.arange(20)
-b = np.ones(20)
+a = [0, 1, 2, 3, 5 ,[0, 0]]
+b = [0]
 
-c.append(a)
-c.append(b)
+c.append([a, b])
 
 c = np.array(c)
 print(c)
-print(np.mean(c, axis = 0))
+
+
+#print(np.mean(c, axis = 0))
 
 #print('cwd', os.getcwd() + "/second_env/training_results")
 

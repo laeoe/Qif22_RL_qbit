@@ -7,12 +7,15 @@ import torch.optim as optim
 from torch.distributions import Categorical
 import torch.multiprocessing as mp
 import numpy as np
+import pickle
 
 import oneQ_2act_environment
 
 env_ = oneQ_2act_environment.GridWorldEnv()
 states_ = list()
 folder_name = "/oneQbit_2actions/"
+
+data_list = list()
 
 # Hyperparameters
 n_train_processes = 3
@@ -21,6 +24,19 @@ update_interval = 5
 gamma = 0.98
 max_train_steps = 20000
 PRINT_INTERVAL = update_interval * 100
+
+def data_save(lists, filename):
+    """Takes list of lists and saves it into filename"""
+    outfile = open(filename, 'wb')
+    pickle.dump(lists, outfile)
+    outfile.close()
+    
+def data_load(filename):
+    infile = open(filename, 'rb')
+    lists = pickle.load(infile)
+    infile.close()
+    return lists
+
 
 class ActorCritic(nn.Module):
     def __init__(self):
@@ -123,21 +139,32 @@ def test(step_idx, model):
     score = 0.0
     done = False
     num_test = 10
-    s_ = list()
+    list_s_ = list()
+    list_s = list()
+    list_a_ = list()
+    list_a = list()
+    list_r = list()
 
     for _ in range(num_test):
         s = env.reset()
         while not done:
+            s_ini = env.vecTrans(initialState)
+            list_s_.append(s_ini)
             prob = model.pi(torch.from_numpy(s).float(), softmax_dim=0)
             a = Categorical(prob).sample().numpy()
             s_prime, r, done, info = env.step(a)
             s = s_prime
             score += r
+            list_s_.append(s)
+            list_a_.append(a)
         done = False
-        s_.append(np.array(s))
-    #Changed from  print(f"Step # :{step_idx}, avg score : {score/num_test:.1f}")
+        list_s.append(list_s_)
+        list_a.append(list_a_)
+        list_r.append(r)
+    data_list.append([step_idx, list_a, list_s, list_r, score])
     env.close()
-    states_.append(np.mean(s_, axis = 0)) #computes the mean of final state after running the model 10 times until it finalized
+
+    #states_.append(np.mean(s_, axis = 0)) #computes the mean of final state after running the model 10 times until it finalized
 
     return(score/num_test)
 
@@ -219,7 +246,7 @@ if __name__ == '__main__':
     envs.close()
     #print("last state vector", s_vec)
     print("done, max reward was:",max_reward)
-    np.save(results_dir + "r_list", np.array(global_r_list))
-    np.save(results_dir + "states_list", np.array(states_))
+    #np.save(results_dir + "r_list", np.array(global_r_list))
+    #np.save(results_dir + "states_list", np.array(states_))
     
     
