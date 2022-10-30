@@ -1,17 +1,12 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[15]:
-
-
 import gym
 from gym import spaces
 import numpy as np
 from numpy import linalg
 import scipy as sc
 from scipy import linalg
+import hyperparams as hp
 
-class GridWorldEnv_3Qubits(gym.Env):
+class GridWorldEnv(gym.Env): 
     
     def __init__(self,maxSteps=20,stepSize=0.1):
         
@@ -46,7 +41,7 @@ class GridWorldEnv_3Qubits(gym.Env):
         self.state = np.dot(self.Hams[action],self.state)
         self.stepNum += 1
         fidelity = np.linalg.norm(np.dot(np.conj(self.state).T,self.targetState))**2
-        if self.step == self.maxSteps or fidelity > 0.99:
+        if self.step == self.maxSteps or fidelity > hp.targetFidelity:
             reward = fidelity
             terminated = True
         else:
@@ -55,9 +50,6 @@ class GridWorldEnv_3Qubits(gym.Env):
         observation = self.vecTrans(self.state)
         info = {}
         return observation, reward, terminated, info
-
-
-# In[ ]:
 
 
 

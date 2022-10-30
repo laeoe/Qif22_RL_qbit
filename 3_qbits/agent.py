@@ -8,16 +8,16 @@ from torch.distributions import Categorical
 import torch.multiprocessing as mp
 import numpy as np
 import pickle
-import oneQ_2act_environment
+import current_env
 
 import custom_functions
-import hyperparams
+import hyperparams as hp
 
-env_ = oneQ_2act_environment.GridWorldEnv()
+env_ = hp.current_env.GridWorldEnv()
 states_ = list()
 #folder_name = "/oneQbit_2actions/"
-folder_name = hyperparams.folder_name
-results_dir = hyperparams.results_dir
+folder_name = hp.folder_name
+results_dir = hp.results_dir
 
 #cwd = os.getcwd()
 #results_dir = cwd + folder_name + "training_results/"
@@ -26,16 +26,16 @@ results_dir = hyperparams.results_dir
 data_list = list()
 
 # Hyperparameters
-n_train_processes = hyperparams.n_train_processes  #number of parallel workers
-learning_rate = hyperparams.learning_rate
-update_interval = hyperparams.update_interval     #interval after which the learning is updated, currently 5
-gamma = hyperparams.gamma
-max_train_steps = hyperparams.max_train_steps
-PRINT_INTERVAL = hyperparams.PRINT_INTERVAL
+n_train_processes = hp.n_train_processes  #number of parallel workers
+learning_rate = hp.learning_rate
+update_interval = hp.update_interval     #interval after which the learning is updated, currently 5
+gamma = hp.gamma
+max_train_steps = hp.max_train_steps
+PRINT_INTERVAL = hp.PRINT_INTERVAL
 
-depth_first_layer = hyperparams.depth_firt_layer
-depth_second_layer = hyperparams.depth_second_layer
-depth_action_space = hyperparams.depth_action_space
+depth_first_layer = hp.depth_firt_layer
+depth_second_layer = hp.depth_second_layer
+depth_action_space = hp.depth_action_space
 
 
 
@@ -220,7 +220,7 @@ if __name__ == '__main__':
         td_target = compute_target(v_final, r_lst, mask_lst)
 
         td_target_vec = td_target.reshape(-1)
-        s_vec = torch.tensor(s_lst).float().reshape(-1, 4)  # 4 == Dimension of state
+        s_vec = torch.tensor(s_lst).float().reshape(-1, depth_first_layer)  # 4 == Dimension of state
         a_vec = torch.tensor(a_lst).reshape(-1).unsqueeze(1)
         advantage = td_target_vec - model.v(s_vec).reshape(-1)
 
