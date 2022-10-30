@@ -8,7 +8,11 @@ results_dir = hyperparams.results_dir
 
 l = custom_functions.data_load(results_dir + "data_list")
 
-print("shape", np.shape(l[0][2][0])
+l_ = l[-1][1][0][1]
+
+
+#print(l_)
+print(len(l_))
 #print(l[0][2][0])
 #print(c)
 

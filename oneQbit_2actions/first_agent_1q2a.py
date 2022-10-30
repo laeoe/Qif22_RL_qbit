@@ -137,6 +137,8 @@ def test(step_idx, model):
     num_test = 10
     list_s_ = list()
     list_s = list()
+    list_g = list()
+
     list_a_ = list()
     list_a = list()
     list_r = list()
@@ -154,10 +156,11 @@ def test(step_idx, model):
             list_s_.append(s)
             list_a_.append(a)
         done = False
-        list_s.append([list_s_])
-        list_a.append([list_a_])
-        list_r.append([r])
-    data_list.append([step_idx, list_a, list_s, list_r, score])
+        
+        list_g.append([list_a_, list_s_, r])
+        list_a_ = list()
+        list_s_ = list()
+    data_list.append([step_idx, list_g])
     env.close()
 
     #states_.append(np.mean(s_, axis = 0)) #computes the mean of final state after running the model 10 times until it finalized
