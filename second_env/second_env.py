@@ -28,6 +28,7 @@ class GridWorldEnv(gym.Env):
         
     def vecTrans(self, state):
         return np.array([state[0].real,state[0].imag,state[1].real,state[1].imag])
+        
     
     def reset(self, options=None):
         self.state = self.initialState
