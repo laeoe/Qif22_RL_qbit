@@ -10,6 +10,7 @@ import numpy as np
 
 import second_env
 env_ = second_env.GridWorldEnv()
+states_ = list()
 
 # Hyperparameters
 n_train_processes = 3
@@ -130,7 +131,7 @@ def test(step_idx, model):
             s = s_prime
             score += r
         done = False
-        print('final state', s)
+        states_.append(s, step_idx)
     #Changed from  print(f"Step # :{step_idx}, avg score : {score/num_test:.1f}")
     env.close()
     return(score/num_test)
@@ -212,7 +213,6 @@ if __name__ == '__main__':
 
     envs.close()
     #print("last state vector", s_vec)
-    print("cwd", cwd)
     print("done, max reward was:",max_reward)
     np.save(results_dir + "/r_list", np.array(global_r_list))
     
