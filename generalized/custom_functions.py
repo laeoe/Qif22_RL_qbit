@@ -1,3 +1,4 @@
+from unittest import result
 import gym
 from gym import spaces
 import numpy as np
@@ -9,11 +10,14 @@ import qutip
 import hyperparams as hp
 import pickle
 import os
-
+import shutil
 
 results_dir = hp.results_dir
 
 
+def duplicate_hp():
+    hp_dir = hp.hp_dir
+    shutil.copy(hp_dir + "hyperparams.py", results_dir + "hyperparams.py")
 
 def data_save(lists, filename):
     """Takes list of lists and saves it into filename"""
@@ -73,7 +77,7 @@ def plot_rewards(data):
     plt.title('Reward as a function of the number of series')
     plt.fill_between(series, r_value - r_error, r_value + r_error, color='blue', alpha=0.2)
     plt.savefig(results_dir + 'Errors.pdf')
-    plt.close()
+    plt.show()
     
 
 def plot_steps(data):
@@ -92,10 +96,10 @@ def plot_steps(data):
     r_error = np.array(step_error)
     plt.xlabel('Number of series')
     plt.ylabel('Reward')
-    plt.title('Reward as a function of the number of series')
+    plt.title('Number of steps made untill fidelity reached')
     plt.fill_between(series, r_value - r_error, r_value + r_error, color='blue', alpha=0.2)
     plt.savefig(results_dir + 'Steps.pdf')
-    plt.close()
+    plt.show()
 
 def plot_bangbang(data, i, j):
     bb = []
@@ -107,7 +111,7 @@ def plot_bangbang(data, i, j):
     plt.ylabel('h-field')
     plt.title('Magnetic field strength over time')
     plt.savefig(results_dir + 'Bangbang.pdf')
-    plt.close()
+    plt.show()
 
 def plot_bangbang_continuous(data, i, j):
     bb = []
@@ -119,7 +123,7 @@ def plot_bangbang_continuous(data, i, j):
     plt.ylabel('h-field')
     plt.title('Magnetic field strength over time')
     plt.savefig(results_dir + 'Bangbang2.pdf')
-    plt.close()
+    plt.show()
 
 # data_list_1: 20k steps, both steps and fidelity bounded,same as _3, but 100k
 # data_list_2: 100k steps, only  

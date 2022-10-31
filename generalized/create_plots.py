@@ -21,7 +21,7 @@ def plot_all():
     cf.blochsphere(f_state)
 
     cf.plot_rewards(data)
-    cf.plot_bangbang(data, -1, 8)
+    cf.plot_bangbang_continuous(data, -1, 8)
     cf.plot_steps(data)
 
 

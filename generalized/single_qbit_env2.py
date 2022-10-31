@@ -9,7 +9,6 @@ import qutip
 import hyperparams as hp
 
 
-
 class GridWorldEnv(gym.Env):
     
     def __init__(self,maxSteps=hp.maxSteps,stepSize=hp.stepSize):

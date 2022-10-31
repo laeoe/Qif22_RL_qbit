@@ -12,7 +12,7 @@ import pickle
 import custom_functions as custom_functions
 import hyperparams as hyperparams
 
-from hyperparams import env
+import single_qbit_env2 as env
 
 env_ = env.GridWorldEnv()
 states_ = list()
@@ -251,3 +251,7 @@ if __name__ == '__main__':
     
     
     custom_functions.data_save(data_list, results_dir + "data_list")
+
+    import create_plots
+    create_plots.plot_all()
+    custom_functions.duplicate_hp()
