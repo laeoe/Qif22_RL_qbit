@@ -6,7 +6,7 @@ import scipy as sc
 from scipy import linalg
 import matplotlib.pyplot as plt
 import qutip
-import hyperparams as hp
+import generalized.hyperparams as hp
 import pickle
 import os
 

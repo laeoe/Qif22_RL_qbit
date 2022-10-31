@@ -5,7 +5,7 @@ from numpy import linalg
 import scipy as sc
 from scipy import linalg
 from torch import initial_seed
-import hyperparams as hp
+import generalized.hyperparams as hp
 
 class GridWorldEnv(gym.Env): 
     

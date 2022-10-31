@@ -1,7 +1,7 @@
 import numpy as np
 import os
-import custom_functions
-import hyperparams
+import generalized.custom_functions as custom_functions
+import generalized.hyperparams as hyperparams
 
 results_dir = hyperparams.results_dir
 

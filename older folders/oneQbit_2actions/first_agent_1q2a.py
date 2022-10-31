@@ -8,12 +8,12 @@ from torch.distributions import Categorical
 import torch.multiprocessing as mp
 import numpy as np
 import pickle
-import oneQ_2act_environment
+import generalized.single_qbit_env2 as single_qbit_env2
 
-import custom_functions
-import hyperparams
+import generalized.custom_functions as custom_functions
+import generalized.hyperparams as hyperparams
 
-env_ = oneQ_2act_environment.GridWorldEnv()
+env_ = single_qbit_env2.GridWorldEnv()
 states_ = list()
 #folder_name = "/oneQbit_2actions/"
 folder_name = hyperparams.folder_name

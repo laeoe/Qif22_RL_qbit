@@ -8,20 +8,17 @@ from torch.distributions import Categorical
 import torch.multiprocessing as mp
 import numpy as np
 import pickle
-import oneQ_2act_environment
 
-import custom_functions
-import hyperparams
+import custom_functions as custom_functions
+import hyperparams as hyperparams
 
-env_ = oneQ_2act_environment.GridWorldEnv()
+from hyperparams import env
+
+env_ = env.GridWorldEnv()
 states_ = list()
 #folder_name = "/oneQbit_2actions/"
 folder_name = hyperparams.folder_name
 results_dir = hyperparams.results_dir
-
-#cwd = os.getcwd()
-#results_dir = cwd + folder_name + "training_results/"
-
 
 data_list = list()
 
