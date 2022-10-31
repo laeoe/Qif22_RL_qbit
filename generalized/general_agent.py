@@ -192,6 +192,7 @@ if __name__ == '__main__':
 
     ### changes to output best model
     max_reward = 0
+    best_model_index = 0
     global_r_list = list()
     #global_r_list.append("N train ")
 
@@ -240,12 +241,14 @@ if __name__ == '__main__':
 
             if current_reward > max_reward:
                 max_reward = current_reward
+                best_model_index = step_idx
                 torch.save(pi, results_dir + "trained_Agent.pth")
 
 
     envs.close()
     #print("last state vector", s_vec)
     print("done, max reward was:",max_reward)
+    data_list.append(best_model_index)
     #np.save(results_dir + "r_list", np.array(global_r_list))
     #np.save(results_dir + "states_list", np.array(states_))
     

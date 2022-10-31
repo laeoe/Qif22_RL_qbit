@@ -13,7 +13,7 @@ import os
 folder_name = "/generalized/training_results/"
 
 cwd = os.getcwd()
-results_dir = cwd + folder_name + "run8"
+results_dir = cwd + folder_name + "run9"
 hp_dir = cwd + "/generalized/"
 
 if __name__ == '__main__':
@@ -28,7 +28,7 @@ n_train_processes = 3
 learning_rate = 0.0002
 update_interval = 30
 gamma = 0.98
-max_train_steps = 200000
+max_train_steps = 1000000
 PRINT_INTERVAL = 500
 
 depth_firt_layer = 4
@@ -41,7 +41,7 @@ maxSteps = int(2/stepSize)
 initialState = np.array([np.sqrt((5+np.sqrt(5))/10),np.sqrt(2/(5+np.sqrt(5)))])
 #initialState = np.array([1, 0])
 targetState = np.array([-(1+np.sqrt(5))/(np.sqrt(2*(5+np.sqrt(5)))), np.sqrt(2.0/(5+np.sqrt(5)))])
-targetFidelity = 0.999
+targetFidelity = 1 #0.999
 
 
 ##changes### long runtime
@@ -51,3 +51,6 @@ targetFidelity = 0.999
 
 #edit: 
 #previous model failed to converge, now increased the update interval to 30
+
+#edit 2:
+#now a milion training steps
