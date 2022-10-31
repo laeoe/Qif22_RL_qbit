@@ -10,9 +10,11 @@ l = custom_functions.data_load(results_dir + "data_list")
 
 l_ = l[-1][1][0][1]
 
-
-print(l_[0])
-print(len(l_))
+while True:
+    print('hi')
+    break
+#print(l_[0])
+#print(len(l_))
 #print(l[0][2][0])
 #print(c)
 

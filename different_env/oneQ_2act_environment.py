@@ -8,13 +8,11 @@ import matplotlib.pyplot as plt
 import qutip
 import hyperparams as hp
 
-#hyperparams 
-
 
 
 class GridWorldEnv(gym.Env):
     
-    def __init__(self,maxSteps=20,stepSize=0.1):
+    def __init__(self,maxSteps=hp.maxSteps,stepSize=hp.stepSize):
         
         self.maxSteps = maxSteps
         self.stepSize = stepSize

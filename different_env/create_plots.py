@@ -11,15 +11,17 @@ import pickle
 import os
 import custom_functions as cf 
 
-results_dir = hp.results_dir
-data = cf.data_load(results_dir + "data_list")
+def plot_all():
+    results_dir = hp.results_dir
+    data = cf.data_load(results_dir + "data_list")
 
-#plot blochsphere final state
-f_state = data[-1][1][0][1][-1]
-#print(f_state)
-cf.blochsphere(f_state)
+    #plot blochsphere final state
+    f_state = data[-1][1][0][1][-1]
+    #print(f_state)
+    cf.blochsphere(f_state)
 
-cf.plot_rewards(data)
-cf.plot_bangbang(data, -1, 8)
-cf.plot_steps(data)
+    cf.plot_rewards(data)
+    cf.plot_bangbang(data, -1, 8)
+    cf.plot_steps(data)
+
 

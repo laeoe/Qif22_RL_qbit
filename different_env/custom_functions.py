@@ -73,7 +73,7 @@ def plot_rewards(data):
     plt.title('Reward as a function of the number of series')
     plt.fill_between(series, r_value - r_error, r_value + r_error, color='blue', alpha=0.2)
     plt.savefig(results_dir + 'Errors.pdf')
-    plt.clf()
+    plt.close()
     
 
 def plot_steps(data):
@@ -95,7 +95,7 @@ def plot_steps(data):
     plt.title('Reward as a function of the number of series')
     plt.fill_between(series, r_value - r_error, r_value + r_error, color='blue', alpha=0.2)
     plt.savefig(results_dir + 'Steps.pdf')
-    plt.clf()
+    plt.close()
 
 def plot_bangbang(data, i, j):
     bb = []
@@ -107,7 +107,7 @@ def plot_bangbang(data, i, j):
     plt.ylabel('h-field')
     plt.title('Magnetic field strength over time')
     plt.savefig(results_dir + 'Bangbang.pdf')
-    plt.clf()
+    plt.close()
 
 def plot_bangbang_continuous(data, i, j):
     bb = []
@@ -119,7 +119,7 @@ def plot_bangbang_continuous(data, i, j):
     plt.ylabel('h-field')
     plt.title('Magnetic field strength over time')
     plt.savefig(results_dir + 'Bangbang2.pdf')
-    plt.clf()
+    plt.close()
 
 # data_list_1: 20k steps, both steps and fidelity bounded,same as _3, but 100k
 # data_list_2: 100k steps, only  
